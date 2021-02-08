@@ -1,92 +1,75 @@
 const Workout = require("../models/workout")
-module.exports = function(app) {
+/* These are all the fetch requests in the public api.js
+api.js:      res = await fetch("/api/workouts");
+api.js:    const res = await fetch("/api/workouts/" + id, {
+api.js:    const res = await fetch("/api/workouts", {
+api.js:    const res = await fetch(`/api/workouts/range
+*/
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "./public/index.html"));
+
+module.exports = function(app) {
+  //verified code works
+  app.get('/api/workouts', (req, res) => {
+    Workout.find({})
+    .sort({ date: -1 }) //desending order should return the newest first
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    });
+   
   });
   
-  app.post("/submit", (req, res) => {
-    console.log(req.body);
+  app.put('/api/workouts/:id', (req, res) => {
+        let rec_id = req.params.id;
+        rec_id.trim(); //make sure no spaces
+        //findOneAndUpdate(filter, update, options)
+        Workout.findOneAndUpdate(
+            {_id: rec_id}, // filter
+            {
+                $push: {
+                    exercises: req.body,
+                }
+            },//update
+            {new: true}//options
+        )
+            .then(data => {
+                // console.log(data)
+                res.json(data);
+            })
+            .catch(err => {
+                res.status(400).json(err);
+            });
+  });
   
-    Workout.insert(req.body, (error, data) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(data);
-      }
+  app.post("/api/workouts", (req, res) => {
+    Workout.create(req.body)
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
+    }); 
+  });
+  
+  app.get("/api/workouts/range", (req, res) => {
+    console.log("*****req.body",req)
+    Workout.find({})
+    .sort({ date: -1 }) //desending order should return the newest first
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.status(400).json(err);
     });
   });
   
-  app.get("/workouts", (req, res) => {
-    db.exercise.find({}, (error, data) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.json(data);
-      }
-    });
-  });
-  
-  app.get("/find/:id", (req, res) => {
-    db.exercise.findOne(
-      {
-        _id: mongojs.ObjectId(req.params.id)
-      },
-      (error, data) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(data);
-        }
-      }
-    );
-  });
-  
-  app.post("/update/:id", (req, res) => {
-    db.exercise.update(
-      {
-        _id: mongojs.ObjectId(req.params.id)
-      },
-      {
-        $set: {
-          day: req.body.title,
-          note: req.body.note,
-          modified: Date.now()
-        }
-      },
-      (error, data) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(data);
-        }
-      }
-    );
-  });
   
   app.delete("/delete/:id", (req, res) => {
-    db.notes.remove(
-      {
-        _id: mongojs.ObjectID(req.params.id)
-      },
-      (error, data) => {
-        if (error) {
-          res.send(error);
-        } else {
-          res.send(data);
-        }
-      }
-    );
+  
   });
   
-  app.delete("/clearall", (req, res) => {
-    db.notes.remove({}, (error, response) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send(response);
-      }
-    });
-  });
+
 
 }
