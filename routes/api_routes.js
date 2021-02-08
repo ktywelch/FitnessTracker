@@ -66,6 +66,13 @@ module.exports = function(app) {
   app.get("/api/workouts/range", (req, res) => {
   
     Workout.find({})
+    Workout.aggregate([
+      {"$addFields":{
+        "totalDuration":{
+          "$sum":"$exercises.duration"
+        }}
+      }
+    ])
     .sort({ date: -1 }).limit(7) //desending order should return the newest first
     .then(dbWorkout => {
       res.json(dbWorkout);
