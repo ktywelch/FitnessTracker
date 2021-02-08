@@ -1,5 +1,5 @@
 const Workout = require("../models/workout")
-/* These are all the fetch requests in the public api.js
+/* These are all the fetch requests in the public folder
 api.js:      res = await fetch("/api/workouts");
 api.js:    const res = await fetch("/api/workouts/" + id, {
 api.js:    const res = await fetch("/api/workouts", {
@@ -11,6 +11,8 @@ module.exports = function(app) {
   //verified code works
   app.get('/api/workouts', (req, res) => {
     Workout.find({})
+    /* adds field totalDuration - required to return the total duration to the stats
+    Does not update the database just adds to the fields in the response */
     Workout.aggregate([
       {"$addFields":{
         "totalDuration":{
@@ -42,7 +44,6 @@ module.exports = function(app) {
             {new: true}//options
         )
             .then(data => {
-                // console.log(data)
                 res.json(data);
             })
             .catch(err => {
@@ -73,12 +74,7 @@ module.exports = function(app) {
       res.status(400).json(err);
     });
   });
-  
-  
-  app.delete("/delete/:id", (req, res) => {
-  
-  });
-  
+
 
 
 }
