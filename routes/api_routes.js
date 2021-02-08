@@ -11,13 +11,20 @@ module.exports = function(app) {
   //verified code works
   app.get('/api/workouts', (req, res) => {
     Workout.find({})
-    .sort({ date: -1 }) //desending order should return the newest first
+    Workout.aggregate([
+      {"$addFields":{
+        "totalDuration":{
+          "$sum":"$exercises.duration"
+        }}
+      }
+    ])
+    .sort({ date: -1 })//desending order should return the newest first
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
     .catch(err => {
       res.status(400).json(err);
-    });
+    })
    
   });
   
@@ -53,10 +60,12 @@ module.exports = function(app) {
     }); 
   });
   
+  //db.yourCollectionName.find ().sort ( {$natural:-1}).limit (yourValue);//
+
   app.get("/api/workouts/range", (req, res) => {
-    console.log("*****req.body",req)
+  
     Workout.find({})
-    .sort({ date: -1 }) //desending order should return the newest first
+    .sort({ date: -1 }).limit(7) //desending order should return the newest first
     .then(dbWorkout => {
       res.json(dbWorkout);
     })
