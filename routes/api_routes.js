@@ -64,8 +64,9 @@ module.exports = function(app) {
   //db.yourCollectionName.find ().sort ( {$natural:-1}).limit (yourValue);//
 
   app.get("/api/workouts/range", (req, res) => {
-  
-    Workout.find({})
+    let startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    let endDate =  new Date(Date.now());
+    Workout.find({day: {$gte: startDate, $lte: endDate}})
     Workout.aggregate([
       {"$addFields":{
         "totalDuration":{
@@ -73,7 +74,10 @@ module.exports = function(app) {
         }}
       }
     ])
-    .sort({ date: -1 }).limit(7) //desending order should return the newest first
+    /* have to do a double sort so that we get the latest 7
+    but we want to get them in ascending order on the chart
+    */
+    .sort({ day: -1 }).limit(7).sort({day: 1}) 
     .then(dbWorkout => {
       res.json(dbWorkout);
     })

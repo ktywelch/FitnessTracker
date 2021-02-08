@@ -175,7 +175,7 @@ function populateChart(data) {
 
 function calculateTotalWeight(data) {
   let totals = [];
-
+  console.log("calc eight",data)
   data.forEach((workout) => {
     const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
       if (type === 'resistance') {
