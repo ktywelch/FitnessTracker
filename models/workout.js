@@ -10,6 +10,5 @@ const workoutSchema = new mongoose.Schema({
         type: Array,
     }  
 })
-
-       
+     
 module.exports = mongoose.model('Workout', workoutSchema)

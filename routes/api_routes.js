@@ -1,6 +1,7 @@
 const Workout = require("../models/workout")
-/* These are all the fetch requests in the public folder
-api.js:      res = await fetch("/api/workouts");
+/* These are all the fetch requests in the public folder so using this to determine 
+what routes are needed
+api.js:         res = await fetch("/api/workouts");
 api.js:    const res = await fetch("/api/workouts/" + id, {
 api.js:    const res = await fetch("/api/workouts", {
 api.js:    const res = await fetch(`/api/workouts/range
@@ -61,9 +62,9 @@ module.exports = function(app) {
     }); 
   });
   
-  //db.yourCollectionName.find ().sort ( {$natural:-1}).limit (yourValue);//
-
   app.get("/api/workouts/range", (req, res) => {
+    /*This restricts the range to last 7 days - which is what I think it should be 
+    but not what was specified */ 
     let startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     let endDate =  new Date(Date.now());
     Workout.find({day: {$gte: startDate, $lte: endDate}})
@@ -74,8 +75,9 @@ module.exports = function(app) {
         }}
       }
     ])
-    /* have to do a double sort so that we get the latest 7
-    but we want to get them in ascending order on the chart
+    /* This set the limit to to the latest 7 and requies double sort - 
+    first so we can get the latest 7 (descending order) 
+    but we want to see the chart in ascending or
     */
     .sort({ day: -1 }).limit(7).sort({day: 1}) 
     .then(dbWorkout => {
@@ -85,7 +87,5 @@ module.exports = function(app) {
       res.status(400).json(err);
     });
   });
-
-
 
 }
