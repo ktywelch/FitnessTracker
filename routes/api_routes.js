@@ -64,10 +64,11 @@ module.exports = function(app) {
   
   app.get("/api/workouts/range", (req, res) => {
     /*This restricts the range to last 7 days - which is what I think it should be 
-    but not what was specified */ 
+    but not what was specified so leaving in comments for now..
     let startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     let endDate =  new Date(Date.now());
     Workout.find({day: {$gte: startDate, $lte: endDate}})
+    */
     Workout.aggregate([
       {"$addFields":{
         "totalDuration":{

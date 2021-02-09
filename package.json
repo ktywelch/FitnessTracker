@@ -1,7 +1,10 @@
 {
-  "name": "mongoose_skeleton",
+  "name": "fitnesstracker-kw",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fitness Tracker using code provided",
+  "engines": {
+    "node": "14.x"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +12,7 @@
     "watch": "nodemon server.js",
     "seed": "node seeders/seed.js"
   },
-  "author": "",
+  "author": "Kathleen Welch",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
