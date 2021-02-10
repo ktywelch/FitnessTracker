@@ -1,6 +1,6 @@
 # FitnessTracker
 
-The FitnessTrakcer application utilizes a mongo database and mongoosejs to allow users to workouts and track cardio and resistence excercises into a database that the user can view in a dashboard to track duration and weight lifted over the past 7 workouts. 
+The FitnessTrakcer application utilizes a mongo database and mongoose to allow users to workouts and track cardio and resistence excercises into a database that the user can view in a dashboard to track duration and weight lifted over the past 7 workouts. 
 
 [Fitness tracker application can be found on github repository ](https://github.com/ktywelch/FitnessTracker)
 
