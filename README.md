@@ -1,61 +1,63 @@
-# Unit 17 NoSQL Homework: Workout Tracker
+# FitnessTracker
 
-For this assignment, you'll create a workout tracker. You have already been provided with the front end code in the `Develop` folder. This assignment will require you to create Mongo database with a Mongoose schema and handle routes with Express.
+The FitnessTrakcer application utilizes a mongo database and mongoosejs to allow users to workouts and track cardio and resistence excercises into a database that the user can view in a dashboard to track duration and weight lifted over the past 7 workouts. 
 
-## User Story
+[Fitness tracker application can be found on github repository ](https://github.com/ktywelch/FitnessTracker)
 
-* As a user, I want to be able to view create and track daily workouts. I want to be able to log multiple exercises in a workout on a given day. I should also be able to track the name, type, weight, sets, reps, and duration of exercise. If the exercise is a cardio exercise, I should be able to track my distance traveled.
+## Table of contents
+* [Design](#Design)
+* [Installation](#Installation)
+* [Usage](#Usage)
+* [Technologies](#Technologies)
+* [Contributions](#Contributions)
+* [License](#License)
 
-## Business Context
+## Design
+The design utilizes a server, controllers, DB and  express  to create a web site that will  allow the user to track workouts in a database and add exercises to an existing workout until completed.
 
-A consumer will reach their fitness goals more quickly when they track their workout progress.
+The application is deployed on [Heroku at fitnesstracker-kw.herokuapp.com](https://fitnesstracker-kw.herokuapp.com).
 
-## Acceptance Criteria
+## Database:
 
-When the user loads the page, they should be given the option to create a new workout or continue with their last workout.
+Is is NoSQL DB that utilizes a collection with a date and an array to trace the exercises associated with each workout. 
 
-The user should be able to:
 
-  * Add exercises to the most recent workout plan.
+## Installation
+Assumptions prior to installation that the user has installed MongoDB community edition and installed and is familiar with starting MongoDB services. For additional details on install MySQL and tools please refer to the [MongoDB Community Edition site.](https://www.mongodb.com/try/download/community) 
 
-  * Add new exercises to a new workout plan.
+The installation process is a download of git source, using npm install to install required modules based on the package.json file included in the same directory as the application.
 
-  * View the combined weight of multiple exercises from the past seven workouts on the `stats` page.
+The application has a seed.js that is used to populate test data and create the DB using the model. To execute the seed the user can run:
+```npm run seed```
 
-  * View the total duration of each workout from the past seven workouts on the `stats` page.
+## Usage
+To start the application run:
 
-> **Important:** Look into using a MongoDB aggregate function to dynamically add up and return the total duration for each workout. Check out the [MongoDB documentation on the $addFields](https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/), the [MongoDB documentation on the $sum operator](https://docs.mongodb.com/manual/reference/operator/aggregation/sum/), and the [Mongoose documentation on aggregate functions](https://mongoosejs.com/docs/api.html#aggregate_Aggregate) to learn how it can be accomplished.
+```node server.js```
+    or 
+``` npm start ```
 
-To deploy an application with a MongoDB database to Heroku, you'll need to set up a MongoDB Atlas account and connect a database from there to your application. Be sure to use the following guides for support:
+Below is  gif image of the user interface.
 
-  * [Set Up MongoDB Atlas](../04-Important/MongoAtlas-Setup.md)
+![](./public/images/fitness.gif)
 
-  * [Deploy with Heroku and MongoDB Atlas](../04-Important/MongoAtlas-Deploy.md)
 
-## Commit Early and Often
+## Technologies
+* MongoDB NoSQL Database Server
+* Robo 3T
+* Node.js
+* NPM modules express, mongoose, router, views, bootstrap & HTML
 
-One of the most important skills to master as a web developer is version control. Building the habit of committing via Git is important for the following two reasons:
+## Contributions - Study peers
+* Sam Ayler
+* Vincent Gines
+* Albert Cheng
+* Lucah Endicott
 
-1. Your commit history is a signal to employers that you are actively working on projects and learning new skills.
+## License
+ISC License (ISC)
 
-2. Your commit history allows you to revert your codebase in the event that you need to return to a previous state.
 
-Follow these guidelines for committing:
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
-* Make single-purpose commits for related changes to ensure a clean, manageable history. If you are fixing two issues, make two commits.
-
-* Write descriptive, meaningful commit messages so that you and anyone else looking at your repository can easily understand its history.
-
-* Don't commit half-done work, for the sake of your collaborators (and your future self!).
-
-* Test your application before you commit to ensure functionality at every step in the development process.
-
-We want you to have well over 200 commits by graduation, so commit early and often!
-
-## Submission on BCS
-
-You are required to submit the following:
-
-* The URL to the deployed application
-
-* The URL to the GitHub repository
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
